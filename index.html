@@ -69,6 +69,12 @@ input.fill:focus{outline:none;border-color:var(--teal)}
 .chip{border:1.5px solid var(--teal);background:#fff;color:var(--teal);border-radius:9px;padding:7px 11px;font:600 15px 'DM Sans';cursor:pointer}
 .built .chip{background:var(--teal);color:#fff}
 .chip.used{visibility:hidden}
+.tools{display:flex;gap:8px;margin:-4px 0 12px;flex-wrap:wrap}
+.tool{border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 12px;font:600 13px 'DM Sans';color:var(--mute);cursor:pointer}
+.tool.on{border-color:var(--teal);color:var(--teal);background:var(--teal2)}
+.trbox{background:#eef4fb;border:1px solid #cfe0f2;border-radius:10px;padding:9px 12px;margin:0 0 12px;font-size:15px;color:#21415f}
+.dkbox{background:#f1efe9;border:1.5px dashed #c9c2b2;border-radius:10px;padding:12px;color:var(--mute);font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.q.dk{border-color:#c9c2b2}
 .fb{margin-top:12px;font-size:15px;border-top:1px solid rgba(0,0,0,.08);padding-top:10px}
 .fb .lab{font-weight:700}
 .fb .ok{color:var(--ok)}.fb .bad{color:var(--bad)}
@@ -544,6 +550,44 @@ const BOOK=[
 ]}
 ];
 
+// English translations, shown only when the learner taps "Translate". null = question is already in English.
+const TR={
+k1s1:['“Wie heißen Sie?” = “What is your name?”','I ___ from Sri Lanka. (to come)','Where ___ you? – I live in Berlin. (to live)',null,null,'Woher = where from · kommen = come · Sie = you (formal)','I ___ 25 years old. (to be)','Which languages ___ you? (to speak)'],
+k1s2:['I come from ___ Switzerland.','In Austria people speak ___.','In Spain people speak ___.','I come from ___ USA.',null,null,'Paris is in ___. (write the country in German)',null],
+k1s3:[null,null,null,null,null,null,null,'I am ___ years old. (35)'],
+k1s4:['I am ___ engineer.',null,null,'I like playing tennis. (Ich ___ gern Tennis. — to play)',null,'Ich = I · lese = read · gern = like to',null,null],
+k1s5:['You ___ in Colombo. (to live)','He ___ Peter. (to be called)','We ___ from India.','You (plural) ___ students.','Kommen = come · Sie = you (formal) · aus = from · Japan','All four mean “Today I am learning German.” Only the word order is different.','___ name is Anna. (my)','He ___ at Siemens. (to work)'],
+k1s6:[null,'You (formal) ___ English and German. (to speak)',null,'He ___ a doctor.',null,'Wie = how · heißt = are called · du = you',null,null],
+k2s1:['What is that? – That is ___ computer.','___ lamp','___ telephone','That is ___ table.','Is that a printer? – No, that is ___ printer.','That is a bag. ___ bag is new.','Plural: the chair → the chairs',null],
+k2s2:['What ___ the pen? (to cost)','The table? – ___ costs 80 euros.',null,'The day after Monday:','___ Friday I play football.','I ___ swim well. (can)','Kannst = can · du = you · Klavier = piano · spielen = play','He ___ speak Spanish. (can)'],
+k2s3:['I have ___ car. (no / not a)','That is ___ correct.','He works ___ BMW.','Tomorrow I am going ___ Berlin.','She lives ___ Munich.','This is Peter and this is ___ wife. (his)','Anna and ___ husband. (her)','This is ___ office. (our)'],
+k2s4:['I have ___ time. (no)','How much ___ that? (to cost)','We ___ speak German. (can)','___ computer is broken. (my)','Sie = she · arbeitet = works · bei = at · Siemens',null,'The day before Thursday:','Where is Mr Rossi from? – ___ Italy.'],
+k3s1:['I would like ___ double room.','Do you have ___ parking space?','I need ___ key.','I ___ reserve a room. (would like)',null,null,'You ___ a tea. (would like)',null],
+k3s2:[null,null,null,'The museum opens ___ 10 o’clock.',null,'house + door = ___ front door',null,null],
+k3s3:['He ___ to Munich. (to drive / travel)','You ___ the bus. (to take)','She ___ the cathedral. (to see)','I am looking for ___ train station.','We visit ___ museum.','He ___ a coffee. (would like)','Ich = I · brauche = need · einen = a · Stadtplan = city map','I have ___ dog. (no)'],
+k3s4:[null,null,'He ___ the newspaper. (to read)',null,'I’ll have ___ tea.',null,'Frühstück = breakfast · gibt es = there is · um sieben Uhr = at seven o’clock',null],
+k4s1:[null,null,null,'___ butter','___ bread roll','You ___ bread. (to eat)','For breakfast I drink ___ orange juice.','___ cheese'],
+k4s2:['a ___ of milk','a ___ of wine',null,null,null,null,null,null],
+k4s3:['I don’t like fish. (Ich ___ keinen Fisch. — to like)','You ___ chocolate. (to like)','Yesterday I ___ in Berlin.','We ___ no time. (had)','The salad? I’ll take ___.','The soup is good. I like eating ___.',null,'Do you know ___? (me)'],
+k4s4:[null,'He likes eating potatoes. (Er ___ gern Kartoffeln. — to eat)','You (plural) ___ at the cinema. (were)','The beer? I don’t drink ___.','a ___ of cola',null,null,'Ich = I · mag = like · keinen = no · Kaffee = coffee'],
+k5s1:['Ich stehe … auf = I get up · um sechs Uhr = at six o’clock','He calls his mother. (anrufen = to call)','We watch TV in the evening. (fernsehen = to watch TV)',null,'You go shopping at the supermarket. (einkaufen)','The film starts at 8 pm. (anfangen = to start)',null,'I have breakfast at 8 o’clock. (frühstücken)'],
+k5s2:['I ___ work long today. (must)','You ___ write the letter. (must)','The boss says I ___ write the report. (should)',null,null,'Wir = we · müssen = must · heute = today · arbeiten = work','You (plural) ___ be on time. (must)',null],
+k5s3:['I ___ eaten pizza. (= I ate pizza)','He ___ driven to Hamburg.',null,null,null,null,null,'When ___ you get up?'],
+k5s4:['___ July I have holidays.','___ Wednesday I have an appointment.',null,null,null,null,null,'I work ___ 9 ___ 5 pm.'],
+k6s1:[null,null,null,'___ winter it is cold.',null,'The sun ___. (to shine)','“Es sind 30 Grad.” = “It is 30 degrees (°C).”',null],
+k6s2:['I’m going to Spain, ___ it is warm there.','I’m not going to the sea, ___ to the mountains.','He ___ travel to Italy. (wants to)','You ___ go on holiday. (want to)','Ich bleibe zu Hause = I stay at home · denn = because · ich bin krank = I am sick','The hotel is nice, ___ expensive.','Are you going by train ___ by car?','We ___ go to the sea. (want to)'],
+k6s3:[null,null,null,null,'I go by ___ underground train.','I go by ___ bus.',null,null],
+k6s4:['I like the dress. (literally: “The dress pleases ___.”)','Can you help ___? (him)','We are going ___ sea.','I’m going ___ Switzerland.','He goes ___ doctor.','The book belongs ___. (to her)','I thank ___. (you, formal)',null],
+k7s1:[null,null,null,null,'___ bathroom',null,null,null],
+k7s2:['The lamp hangs over ___ table.','I put the vase on ___ table.','I lay the phone ___ bed.','Where is the cat? – ___ the sofa.','I hang the picture on the wall.','The chair stands ___ window.','I sit down ___ sofa.','The picture hangs ___ wall.'],
+k7s3:[null,'One may not park here. (Hier ___ man nicht parken.)','You ___ not smoke here. (may)',null,null,'Go ___ the crossroads.','Man = one / people · darf = may · nicht = not · laut = loud · sein = be',null],
+k7s4:[null,null,'My room is smaller ___ your room.','The apartment is as expensive ___ the house.',null,'I drink ___ tea than coffee. (prefer)',null,null],
+k8s1:[null,null,null,'He ___ 40 tomorrow. (turns / becomes)','You ___ a teacher. (will become)',null,null,'You (plural) ___ surely doctors. (will become)'],
+k8s2:[null,'My head hurts. (Mir ___ der Kopf weh.)','My eyes hurt. (Mir ___ die Augen weh.)',null,null,'I have a fever. I ___ go to the doctor. (must)','“Stay in bed!”','___ leg'],
+k8s3:['I ___ come yesterday. (could not)','He ___ work long. (had to)','We ___ go to the cinema. (wanted to)','The present is for ___. (you)','I’m going with ___ girlfriend. (my)','I’m just coming from ___ work.',null,null],
+k8s4:['Last year I ___ in Paris.','We ___ a lot of fun. (had)','She ___ gone home.','I give ___ mother flowers. (my)','I give ___ the book. (him)',null,null,'Ich = I · habe … gemacht = did / made · eine Party = a party']
+};
+
 </script>
 <script>
 const KEY='begegnungen-a1-path-v1';
@@ -552,7 +596,7 @@ try{const r=localStorage.getItem(KEY); if(r) S=JSON.parse(r);}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 
 // flat list of sections in order
-const FLAT=[];BOOK.forEach((c,ci)=>c.sections.forEach((s,si)=>{s.id=`k${c.n}s${si+1}`;s.chap=c;s.idx=FLAT.length;FLAT.push(s);}));
+const FLAT=[];BOOK.forEach((c,ci)=>c.sections.forEach((s,si)=>{s.id=`k${c.n}s${si+1}`;(TR[s.id]||[]).forEach((t,k)=>{if(t&&s.qs[k])s.qs[k].tr=t});s.chap=c;s.idx=FLAT.length;FLAT.push(s);}));
 const isDone=s=>!!S.done[s.id];
 const unlocked=s=>s.idx===0||isDone(FLAT[s.idx-1])||isDone(s);
 const nextIdx=()=>{const i=FLAT.findIndex(s=>!isDone(s));return i<0?null:i};
@@ -629,13 +673,17 @@ function renderSec(){
 }
 function qHTML(it,n){
   const q=it.q, ch=cur.checked;
-  let h=`<div class="q ${ch?(it.correct?'right':'wrong'):''}"><div class="qn">QUESTION ${n+1}</div><div class="qt">${esc(q.q)}</div>`;
+  let h=`<div class="q ${ch?(it.correct?'right':'wrong'):(it.dk?'dk':'')}"><div class="qn">QUESTION ${n+1}</div><div class="qt">${esc(q.q)}</div>`;
+  h+=`<div class="tools">${q.tr?`<button class="tool ${it.showTr?'on':''}" onclick="togTr(${n})">🌐 ${it.showTr?'Hide translation':'Translate'}</button>`:''}${!ch&&!it.dk?`<button class="tool" onclick="setDk(${n},true)">🤷 I don’t know</button>`:''}</div>`;
+  if(it.showTr&&q.tr) h+=`<div class="trbox">🇬🇧 ${esc(q.tr)}</div>`;
+  if(it.dk&&!ch){h+=`<div class="dkbox"><span>🤷 Marked as “I don’t know”. You’ll see the answer after checking.</span><button class="tool" onclick="setDk(${n},false)">Undo</button></div></div>`;return h;}
+  if(it.dk&&ch){/* show options/inputs read-only below */}
   if(q.t==='m'){
     h+='<div class="opts">'+it.opts.map(o=>{
       let cls=''; if(!ch){if(it.ans===o)cls='sel';} else {if(o===q.o[0])cls='good';else if(it.ans===o)cls='badpick';}
       return `<button class="opt ${cls}" ${ch?'disabled':''} onclick="pick(${n},this)" data-v="${esc(o)}">${esc(o)}</button>`;}).join('')+'</div>';
   } else if(q.t==='f'){
-    h+=`<input class="fill" id="f${n}" value="${esc(it.ans||'')}" ${ch?'disabled':''} autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer" oninput="cur.items[${n}].ans=this.value">`;
+    h+=`<input class="fill" id="f${n}" value="${esc(it.ans||'')}" ${ch?'disabled':''} autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer in German" oninput="cur.items[${n}].ans=this.value">`;
     if(!ch) h+=`<div class="uml">${['ä','ö','ü','ß'].map(u=>`<button onclick="ins(${n},'${u}')">${u}</button>`).join('')}</div>`;
   } else {
     h+=`<div class="built">${it.ans.map((w,k)=>`<button class="chip" ${ch?'disabled':''} onclick="unbuild(${n},${k})">${esc(it.bank[w])}</button>`).join('')||'<span class="sub">Tap the words below in the right order</span>'}</div>`;
@@ -644,12 +692,15 @@ function qHTML(it,n){
   if(ch){
     const yours=q.t==='w'?it.ans.map(k=>it.bank[k]).join(' '):(it.ans||'');
     const right=q.t==='m'?q.o[0]:q.t==='f'?q.a[0]:q.a[0].split('|').join(' ')+'.';
+    if(it.dk) h+=`<div class="fb"><span class="lab" style="color:#8a7f66">🤷 You marked: I don’t know</span><br><span class="lab ok">Correct answer:</span> ${esc(right)}<div class="ex">💡 ${q.e}</div></div>`; else
     h+=`<div class="fb">${it.correct?`<span class="lab ok">✓ Correct</span>${it.loose?` <span class="sub">(correct spelling: ${esc(right)})</span>`:''}`
       :`<span class="lab bad">✗ Your answer:</span> ${yours?esc(yours):'<i>(empty)</i>'}<br><span class="lab ok">Correct:</span> ${esc(right)}`}
       <div class="ex">💡 ${q.e}</div></div>`;
   }
   return h+'</div>';
 }
+function togTr(n){const it=cur.items[n];it.showTr=!it.showTr;upd(n);}
+function setDk(n,v){if(cur.checked)return;cur.items[n].dk=v;upd(n);}
 function pick(n,el){if(cur.checked)return;cur.items[n].ans=el.dataset.v;el.parentNode.querySelectorAll('.opt').forEach(b=>b.classList.toggle('sel',b===el));}
 function ins(n,u){const i=document.getElementById('f'+n);const p=i.selectionStart??i.value.length;i.value=i.value.slice(0,p)+u+i.value.slice(i.selectionEnd??p);cur.items[n].ans=i.value;i.focus();i.setSelectionRange(p+1,p+1);}
 function upd(n){const box=document.getElementById('q'+n);box.innerHTML=qHTML(cur.items[n],n);fixH(n);}
@@ -659,10 +710,11 @@ function build(n,k){const it=cur.items[n];if(cur.checked||it.ans.includes(k))ret
 function unbuild(n,k){if(cur.checked)return;cur.items[n].ans.splice(k,1);upd(n);}
 function check(){
   if(cur.checked)return;
-  const empty=cur.items.filter(it=>it.q.t==='w'?!it.ans.length:!(it.ans&&String(it.ans).trim())).length;
+  const empty=cur.items.filter(it=>!it.dk&&(it.q.t==='w'?!it.ans.length:!(it.ans&&String(it.ans).trim()))).length;
   const m=document.getElementById('msg');
   if(empty&&!cur.warned){cur.warned=true;m.textContent=`${empty} question${empty>1?'s are':' is'} still empty. Tap “Check” again to submit anyway.`;return;}
   cur.items.forEach(it=>{const q=it.q;
+    if(it.dk){it.correct=false;return;}
     if(q.t==='m') it.correct=it.ans===q.o[0];
     else if(q.t==='f'){const a=(it.ans||'').trim().replace(/[.!?]$/,'');it.correct=q.a.some(x=>norm(x)===norm(a));it.loose=it.correct&&!q.a.some(x=>x.toLowerCase()===a.toLowerCase());}
     else {const a=norm(it.ans.map(k=>it.bank[k]).join(' '));it.correct=q.a.some(x=>norm(x.split('|').join(' '))===a);}
