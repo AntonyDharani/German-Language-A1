@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deutsch A1 – Study Path</title>
+<meta name="theme-color" content="#137a7f">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f3ec;--card:#fff;--ink:#1d2a2e;--mute:#62717a;--line:#e3ddd0;--teal:#137a7f;--teal2:#e1f0ef;--ok:#1f8a4c;--okbg:#e5f4ea;--bad:#c0392b;--badbg:#fbe9e6;--gold:#d99a1e}
+*{box-sizing:border-box}
+button,.opt,.chip,.sec,.chap-h{touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.opt:active,.chip:active,.btn:active{transform:scale(.98)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px 80px}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;margin:0;line-height:1.2}
+h1{font-size:28px}
+.sub{color:var(--mute);font-size:14px;margin-top:4px}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin:14px 0 6px}
+.bar i{display:block;height:100%;background:var(--teal);border-radius:9px;transition:width .4s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:12px;padding:13px 18px;font:600 15px 'DM Sans',sans-serif;cursor:pointer;background:var(--teal);color:#fff}
+.btn.ghost{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.4;cursor:default}
+.continue{margin:16px 0 22px}
+.chap{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:14px;overflow:hidden}
+.chap-h{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
+.num{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:700 16px 'Fraunces',serif;background:var(--teal2);color:var(--teal)}
+.chap.done .num{background:var(--teal);color:#fff}
+.chap-h .t{flex:1}
+.chap-h h3{font-size:18px}
+.chap-h small{color:var(--mute);font-size:13px}
+.secs{border-top:1px solid var(--line)}
+.sec{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);cursor:pointer;background:none;width:100%;text-align:left;font:inherit;color:inherit;border-left:0;border-right:0;border-top:0}
+.sec:last-child{border-bottom:0}
+.sec .dot{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:700}
+.sec.ok .dot{background:var(--ok);border-color:var(--ok);color:#fff}
+.sec.mid .dot{background:var(--gold);border-color:var(--gold);color:#fff}
+.sec.cur .dot{border-color:var(--teal);background:var(--teal2)}
+.sec.lock{opacity:.45;cursor:default}
+.sec .st{flex:1}
+.sec .sc{font-size:13px;color:var(--mute)}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:6px;background:#f1e6cf;color:#8a5a00;margin-left:6px;vertical-align:2px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.back{background:none;border:0;font:600 15px 'DM Sans';color:var(--teal);cursor:pointer;padding:6px 0}
+.pill{display:inline-block;background:var(--teal2);color:var(--teal);font-size:13px;font-weight:600;padding:4px 10px;border-radius:20px;margin-top:8px}
+.learn{background:#fffaf0;border:1px solid #efdfb8;border-radius:14px;padding:14px 16px;margin:16px 0}
+.learn h4{margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#8a5a00}
+.learn ul{margin:0;padding-left:18px}.learn li{margin:5px 0}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.q.right{border-color:var(--ok);background:var(--okbg)}
+.q.wrong{border-color:var(--bad);background:var(--badbg)}
+.qn{font-size:12px;font-weight:700;color:var(--mute);letter-spacing:.05em}
+.qt{font-weight:500;margin:4px 0 12px;font-size:17px}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:11px 13px;font:inherit;cursor:pointer;color:inherit}
+.opt.sel{border-color:var(--teal);background:var(--teal2);font-weight:600}
+.opt.good{border-color:var(--ok);background:#fff;font-weight:600}
+.opt.badpick{border-color:var(--bad);text-decoration:line-through;background:#fff}
+input.fill{width:100%;font:500 17px 'DM Sans';padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:inherit}
+input.fill:focus{outline:none;border-color:var(--teal)}
+.uml{display:flex;gap:6px;margin-top:8px}
+.uml button{flex:1;padding:8px 0;border:1px solid var(--line);background:#fff;border-radius:8px;font:600 16px 'DM Sans';cursor:pointer;color:inherit}
+.bank,.built{display:flex;flex-wrap:wrap;gap:8px;min-height:46px}
+.built{border:1.5px dashed var(--line);border-radius:10px;padding:8px;margin-bottom:10px;background:#fff}
+.chip{border:1.5px solid var(--teal);background:#fff;color:var(--teal);border-radius:9px;padding:7px 11px;font:600 15px 'DM Sans';cursor:pointer}
+.built .chip{background:var(--teal);color:#fff}
+.chip.used{visibility:hidden}
+.fb{margin-top:12px;font-size:15px;border-top:1px solid rgba(0,0,0,.08);padding-top:10px}
+.fb .lab{font-weight:700}
+.fb .ok{color:var(--ok)}.fb .bad{color:var(--bad)}
+.fb .ex{margin-top:6px;color:#33454b}
+.score{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 16px;margin:6px 0 16px}
+.big{font:700 46px 'Fraunces',serif;color:var(--teal)}
+.score p{margin:6px 0 0;color:var(--mute)}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row .btn{flex:1;min-width:150px}
+.msg{color:var(--bad);font-size:14px;text-align:center;margin:8px 0}
+.foot{color:var(--mute);font-size:12px;text-align:center;margin-top:26px}
+.reset{background:none;border:0;color:var(--mute);text-decoration:underline;font:inherit;font-size:12px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+// Original practice questions following the topics of Begegnungen A1+ (Buscha/Szita).
+// M(question, [correct, wrong...], explanation)  F(question, [accepted answers], explanation)
+// W(instruction, ["Word|by|word", "Alternative|order"], explanation)
+const M=(q,o,e)=>({t:'m',q,o,e}), F=(q,a,e)=>({t:'f',q,a,e}), W=(q,a,e)=>({t:'w',q,a,e});
+
+const BOOK=[
+{n:1,title:'Guten Tag',pages:'8–34',sections:[
+ {title:'Sich vorstellen',pages:'8–9',learn:[
+  'Wie heißen Sie? → Ich heiße … · Woher kommen Sie? → Ich komme aus … · Wo wohnen Sie? → Ich wohne in …',
+  '<b>Sie</b> = formal "you" (strangers, work). <b>du</b> = informal (friends, family, children).',
+  'Guten Morgen (morning) · Guten Tag (day) · Guten Abend (evening) · Tschüss / Auf Wiedersehen (bye).'],
+ qs:[
+  M('“Wie heißen Sie?” — Which is the right answer?',['Ich heiße Anna.','Ich komme aus Polen.','Ich wohne in Wien.','Ich bin 30 Jahre alt.'],'“heißen” asks for your name. The others answer “Woher?”, “Wo?” and “Wie alt?”.'),
+  F('Ich ___ aus Sri Lanka. (kommen)',['komme'],'With <b>ich</b> the verb ends in <b>-e</b>: ich komme.'),
+  F('Wo ___ Sie? – Ich wohne in Berlin. (wohnen)',['wohnen'],'With formal <b>Sie</b> the verb ends in <b>-en</b> (same as the infinitive).'),
+  M('It is 8 o’clock in the morning. You say:',['Guten Morgen!','Guten Abend!','Gute Nacht!','Tschüss!'],'Guten Morgen until about 10–11 am. Gute Nacht is only before sleeping.'),
+  M('Which question is informal (du)?',['Wie heißt du?','Wie heißen Sie?','Woher kommen Sie?','Wo wohnen Sie?'],'du → verb ends in -st (here heißt, because the stem already ends in ß).'),
+  W('Put the words in order (a question):',['Woher|kommen|Sie'],'W-question: question word first, verb second, then the subject.'),
+  F('Ich ___ 25 Jahre alt. (sein)',['bin'],'sein is irregular: ich bin, du bist, er ist, wir sind, ihr seid, sie/Sie sind.'),
+  M('Welche Sprachen ___ Sie?',['sprechen','spricht','sprichst','spreche'],'Sie → infinitive form: sprechen.')]},
+ {title:'Alphabet, Länder und Sprachen',pages:'10–14',learn:[
+  'Ich komme <b>aus</b> + country: aus Indien, aus Deutschland, aus Sri Lanka.',
+  'Some countries have an article: die Schweiz → aus <b>der</b> Schweiz, die Türkei → aus <b>der</b> Türkei, die USA → aus <b>den</b> USA.',
+  'Many languages end in <b>-isch</b>: Spanien → Spanisch, England → Englisch. But Deutschland → Deutsch.',
+  'Special letters: ä, ö, ü, ß (= “ss”). <b>ei</b> sounds like English “eye”, <b>ie</b> like “ee”.'],
+ qs:[
+  M('Ich komme aus ___ Schweiz.',['der','die','dem','(nothing)'],'die Schweiz has an article. After “aus” it becomes <b>der</b> (Dativ, you learn this fully in Kapitel 6).'),
+  M('In Österreich spricht man ___.',['Deutsch','Österreichisch','Englisch','Französisch'],'Austria’s language is German (Deutsch).'),
+  F('In Spanien spricht man ___.',['Spanisch'],'Country → language with -isch: Spanien → Spanisch.'),
+  M('Ich komme aus ___ USA.',['den','der','die','dem'],'die USA is plural. After “aus”: aus <b>den</b> USA.'),
+  M('The German letter W sounds like …',['English “v” (as in “very”)','English “w” (as in “water”)','“double-u”','English “f”'],'W = [ve]. Wien sounds like “Veen”.'),
+  M('“ß” sounds like …',['ss','b','z','sch'],'ß (Eszett) is a sharp s: heißen, Straße.'),
+  F('Paris liegt in ___.',['Frankreich'],'France = Frankreich, the language = Französisch.'),
+  M('In “heißen”, the letters “ei” sound like …',['English “eye”','English “ee”','“ay” as in “day”','“oy” as in “boy”'],'ei = [ai] like “eye”. Don’t mix with ie = long “ee” (Sie, wie).')]},
+ {title:'Die Zahlen',pages:'15–17',learn:[
+  '13–19: number + zehn → dreizehn. Careful: sechzehn, siebzehn (letters dropped).',
+  '21–99: one <b>und</b> twenty → einundzwanzig, fünfunddreißig.',
+  'Tens: zwanzig, <b>dreißig</b> (with ß!), vierzig, fünfzig, sechzig, siebzig, achtzig, neunzig, hundert.'],
+ qs:[
+  M('17 =',['siebzehn','siebenzehn','siebzig','sechzehn'],'sieben loses “-en”: siebzehn, siebzig.'),
+  M('30 =',['dreißig','dreizig','dreizehn','dreiundzwanzig'],'30 is the irregular one: dreißig (with ß).'),
+  F('Write 21 as a word:',['einundzwanzig'],'one-and-twenty: ein + und + zwanzig (ein, not eins).'),
+  M('“sechsundvierzig” =',['46','64','36','56'],'German says the ones first: sechs (6) und vierzig (40) = 46.'),
+  M('16 =',['sechzehn','sechszehn','sechzig','sechsundzehn'],'sechs loses the “s”: sechzehn, sechzig.'),
+  F('Write 12 as a word:',['zwölf'],'11 = elf, 12 = zwölf are irregular.'),
+  M('100 =',['hundert','tausend','zehnzig','einhundertzehn'],'hundert (or einhundert). tausend = 1000.'),
+  F('Ich bin ___ Jahre alt. (35, as a word)',['fünfunddreißig'],'fünf + und + dreißig.')]},
+ {title:'Personen, Berufe und Hobbys',pages:'18–20',learn:[
+  'Profession <b>without article</b>: Ich bin Lehrer. Sie ist Ärztin.',
+  'Women: add <b>-in</b>: Lehrer → Lehrerin, Student → Studentin, Arzt → Ärztin.',
+  '<b>gern</b> = like doing: Ich spiele gern Fußball. Ich lese gern.'],
+ qs:[
+  M('Ich bin ___ Ingenieur.',['(nothing)','ein','der','eine'],'No article before a profession: Ich bin Ingenieur.'),
+  F('Female form of “Lehrer”:',['Lehrerin'],'Add -in for the female form.'),
+  M('Female form of “Arzt”:',['Ärztin','Arztin','Arztfrau','Ärzte'],'Some words also get an umlaut: Arzt → Ärztin.'),
+  M('Ich ___ gern Tennis.',['spiele','spielt','spielst','spielen'],'ich → -e.'),
+  M('“gern” means …',['I like doing it','never','very','together'],'gern after the verb = you like doing that activity.'),
+  W('Put the words in order:',['Ich|lese|gern'],'Statement: subject, verb (position 2), then gern.'),
+  F('Female form of “Student”:',['Studentin'],'Student → Studentin.'),
+  M('“Er ist verheiratet und hat zwei Kinder.” means …',['He is married and has two children.','He is single.','He has two brothers.','He is two years old.'],'verheiratet = married, ledig = single, die Kinder = children.')]},
+ {title:'Grammatik: Verben, Satzbau, Artikel',pages:'25–31',learn:[
+  'Verb endings: ich -e · du -st · er/sie/es -t · wir -en · ihr -t · sie/Sie -en.',
+  'Statement: verb in <b>position 2</b> (Heute lerne ich Deutsch). Yes/no question: <b>verb first</b> (Kommen Sie aus Japan?).',
+  'Articles: der (masculine), die (feminine), das (neuter). Possessive: mein / meine, dein, Ihr.',
+  'Stem ends in -t/-d → extra e: er arbeitet, du findest. Stem ends in -s/-ß → du heißt (no extra s).'],
+ qs:[
+  F('Du ___ in Colombo. (wohnen)',['wohnst'],'du → -st.'),
+  F('Er ___ Peter. (heißen)',['heißt'],'er → -t: heißt.'),
+  M('Wir ___ aus Indien.',['kommen','kommt','komme','kommst'],'wir → -en.'),
+  M('Ihr ___ Studenten.',['seid','sind','seit','bist'],'ihr seid. (“seit” = since — a different word!)'),
+  W('Make a yes/no question:',['Kommen|Sie|aus|Japan'],'Yes/no questions start with the verb.'),
+  M('Which sentence is correct?',['Heute lerne ich Deutsch.','Heute ich lerne Deutsch.','Heute lerne Deutsch ich.','Ich heute lerne Deutsch.'],'The verb is always in position 2. If “Heute” is first, the subject moves after the verb.'),
+  M('___ Name ist Anna. (my)',['Mein','Meine','Dein','Ihr'],'der Name → mein. Feminine nouns get meine (meine Frau).'),
+  F('Er ___ bei Siemens. (arbeiten)',['arbeitet'],'Stem arbeit- ends in t → add -e-: er arbeitet.')]},
+ {title:'Rückblick Kapitel 1',pages:'32–34',review:true,learn:['Mixed review of Kapitel 1. Do the book’s Rückblick on pages 32–34 too.'],
+ qs:[
+  M('Make this formal: “Woher kommst du?”',['Woher kommen Sie?','Woher kommt ihr?','Woher kommen du?','Woher Sie kommen?'],'Formal Sie + verb in -en, verb stays in position 2.'),
+  F('Sie (formal) ___ Englisch und Deutsch. (sprechen)',['sprechen'],'Sie → infinitive form.'),
+  F('19 as a word:',['neunzehn'],'neun + zehn.'),
+  M('Er ___ Arzt.',['ist','bist','sind','bin'],'er ist.'),
+  M('Official languages of Switzerland:',['Deutsch, Französisch, Italienisch, Rätoromanisch','only “Schweizerisch”','only Deutsch','Englisch'],'Switzerland has four national languages (see Teil B).'),
+  W('Put the words in order:',['Wie|heißt|du'],'W-word, verb, subject.'),
+  F('Female form of “Verkäufer” (salesman):',['Verkäuferin'],'+ -in.'),
+  M('“Tschüss” is …',['an informal goodbye','a formal hello','thank you','please'],'Formal goodbye: Auf Wiedersehen.')]}
+]},
+{n:2,title:'Erste Kontakte am Arbeitsplatz',pages:'36–56',sections:[
+ {title:'Im Büro',pages:'36–40',learn:[
+  'Office words: der Computer, der Drucker, der Tisch, der Stuhl, die Lampe, das Telefon, das Regal.',
+  'Indefinite: <b>ein</b> (der/das), <b>eine</b> (die). Negative: <b>kein / keine</b>.',
+  'First mention → ein/eine. Then → der/die/das: Das ist eine Tasche. Die Tasche ist neu.'],
+ qs:[
+  M('Was ist das? – Das ist ___ Computer.',['ein','eine','einen','einer'],'der Computer → ein Computer (Nominativ).'),
+  M('___ Lampe',['die','der','das'],'die Lampe. Learn every noun with its article!'),
+  M('___ Telefon',['das','der','die'],'das Telefon.'),
+  F('Das ist ___ Tisch. (indefinite article)',['ein'],'der Tisch → ein Tisch.'),
+  M('Ist das ein Drucker? – Nein, das ist ___ Drucker.',['kein','nicht','keine','nein'],'Negating a noun with ein → kein.'),
+  M('Das ist eine Tasche. ___ Tasche ist neu.',['Die','Der','Das','Eine'],'Second mention uses the definite article.'),
+  F('Plural: der Stuhl → die ___',['Stühle'],'Many short masculine nouns: umlaut + e.'),
+  M('“die Abteilung” means …',['department','office desk','meeting','colleague'],'e.g. die Marketingabteilung.')]},
+ {title:'Preise, Tage und Freizeit',pages:'41–46',learn:[
+  'Was kostet der Stuhl? – <b>Er</b> kostet 49 Euro. (der → er, die → sie, das → es)',
+  'Prices: 3,99 € = drei Euro neunundneunzig.',
+  'Days: Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag → <b>am</b> Montag.',
+  '<b>können</b>: ich kann, du kannst, er kann, wir können. Infinitive goes to the end: Ich kann gut schwimmen.'],
+ qs:[
+  M('Was ___ der Kuli?',['kostet','kosten','kostest','kann'],'One thing → kostet.'),
+  M('Der Tisch? – ___ kostet 80 Euro.',['Er','Sie','Es','Der'],'der Tisch → er.'),
+  M('3,99 € is read as:',['drei Euro neunundneunzig','neunundneunzig drei Euro','dreihundertneunundneunzig','drei neun neun'],'Euros first, then the cents.'),
+  F('The day after Montag:',['Dienstag'],'Montag → Dienstag → Mittwoch …'),
+  M('___ Freitag spiele ich Fußball.',['Am','Im','Um','An'],'Days: am Montag, am Freitag.'),
+  M('Ich ___ gut schwimmen.',['kann','kannst','können','könne'],'ich kann (no -e for modal verbs).'),
+  W('Make a question:',['Kannst|du|Klavier|spielen'],'Modal verb first, infinitive at the end.'),
+  F('Er ___ Spanisch sprechen. (können)',['kann'],'er kann — same as ich.')]},
+ {title:'Grammatik: Negation, Possessiv, Präpositionen',pages:'48–53',learn:[
+  '<b>kein</b> negates nouns (Ich habe kein Auto). <b>nicht</b> negates verbs, adjectives, names (Das ist nicht richtig).',
+  'aus = from (origin) · in = in (place) · bei = at (company/person) · nach = to (cities/countries).',
+  'sein (his), ihr (her), unser (our), euer (your pl.), Ihr (formal). Feminine/plural +e: seine Frau.'],
+ qs:[
+  M('Ich habe ___ Auto.',['kein','nicht','keine','keinen'],'das Auto → kein Auto.'),
+  M('Das ist ___ richtig.',['nicht','kein','keine','nein'],'Adjective → nicht.'),
+  M('Er arbeitet ___ BMW.',['bei','in','nach','aus'],'Company → bei.'),
+  M('Morgen fahre ich ___ Berlin.',['nach','in','bei','aus'],'Direction to a city → nach.'),
+  M('Sie wohnt ___ München.',['in','nach','bei','aus'],'Location in a city → in.'),
+  F('Das ist Peter und das ist ___ Frau. (his)',['seine'],'his → sein; die Frau → seine.'),
+  M('Anna und ___ Mann. (her)',['ihr','ihre','sein','seine'],'her → ihr; der Mann → ihr Mann.'),
+  M('Das ist ___ Büro. (our)',['unser','unsere','unseren','euer'],'das Büro → unser.')]},
+ {title:'Rückblick Kapitel 2',pages:'54–56',review:true,learn:['Mixed review of Kapitel 2. Also do the book’s Rückblick on pages 54–56.'],
+ qs:[
+  M('Ich habe ___ Zeit.',['keine','nicht','kein','keinen'],'die Zeit → keine Zeit.'),
+  F('Wie viel ___ das? (kosten)',['kostet'],'das → -t.'),
+  M('Wir ___ Deutsch sprechen.',['können','kann','könnt','kannst'],'wir können.'),
+  M('___ Computer ist kaputt. (my)',['Mein','Meine','Meinen','Meins'],'der Computer → mein.'),
+  W('Put the words in order:',['Sie|arbeitet|bei|Siemens'],'Subject, verb, rest.'),
+  M('Stress in “Telefon”:',['te-le-FON','TE-le-fon','te-LE-fon'],'Telefon is stressed on the last syllable.'),
+  F('The day before Donnerstag:',['Mittwoch'],'Mittwoch = “mid-week”.'),
+  M('Woher kommt Herr Rossi? – ___ Italien.',['Aus','Nach','In','Bei'],'Woher? → aus.')]}
+]},
+{n:3,title:'Unterwegs in München',pages:'58–84',sections:[
+ {title:'Im Hotel',pages:'58–65',learn:[
+  'Ich möchte ein Einzelzimmer / Doppelzimmer für zwei Nächte.',
+  '<b>Akkusativ</b> (object): only masculine changes: der → <b>den</b>, ein → <b>einen</b>, kein → keinen.',
+  'Problems: Die Heizung / Die Dusche funktioniert nicht.'],
+ qs:[
+  M('Ich möchte ___ Doppelzimmer.',['ein','einen','eine','einem'],'das Zimmer → neuter stays ein in Akkusativ.'),
+  M('Haben Sie ___ Parkplatz?',['einen','ein','eine','der'],'der Parkplatz → einen (Akkusativ masculine).'),
+  M('Ich brauche ___ Schlüssel.',['den','der','dem','die'],'der Schlüssel → den.'),
+  F('Ich ___ ein Zimmer reservieren. (möchten)',['möchte'],'ich möchte.'),
+  M('“Die Dusche funktioniert nicht.”',['The shower doesn’t work.','The shower is free.','I need a shower.','Where is the shower?'],'funktionieren = to work (machines).'),
+  M('A room for one person:',['Einzelzimmer','Doppelzimmer','Halbpension','Rezeption'],'einzel = single.'),
+  F('Du ___ einen Tee. (möchten)',['möchtest'],'du möchtest.'),
+  M('“mit Frühstück” means …',['with breakfast','without breakfast','for lunch','from breakfast'],'mit = with, ohne = without.')]},
+ {title:'Stadtplan und Uhrzeit',pages:'66–71',learn:[
+  '3:15 Viertel nach drei · 3:30 <b>halb vier</b> (half TO four!) · 3:45 Viertel vor vier.',
+  'Official: 15:30 = fünfzehn Uhr dreißig. <b>um</b> 9 Uhr · von 9 bis 17 Uhr.',
+  'Compound nouns take the article of the <b>last</b> word: die Stadt + der Plan = <b>der</b> Stadtplan.'],
+ qs:[
+  M('7:30 (informal) =',['halb acht','halb sieben','sieben halb','Viertel nach sieben'],'halb + the NEXT hour.'),
+  M('10:15 =',['Viertel nach zehn','Viertel vor zehn','halb zehn','zehn vor Viertel'],'nach = after.'),
+  M('5:45 =',['Viertel vor sechs','Viertel nach fünf','Viertel vor fünf','halb sechs'],'vor = before the next hour.'),
+  M('Das Museum öffnet ___ 10 Uhr.',['um','am','im','in'],'Clock time → um.'),
+  M('die Stadt + der Plan =',['der Stadtplan','die Stadtplan','das Stadtplan'],'Last word decides: der Plan.'),
+  M('das Haus + die Tür = ___ Haustür',['die','das','der'],'die Tür → die Haustür.'),
+  M('14:20 (official) =',['vierzehn Uhr zwanzig','zwei Uhr vierzehn','zwanzig Uhr vierzehn','vierzig Uhr zwei'],'Hours + Uhr + minutes.'),
+  M('“der Eintritt” at a museum =',['entrance fee','exit','opening hours','ticket office'],'Was kostet der Eintritt?')]},
+ {title:'Grammatik: Akkusativ, Vokalwechsel, möchten',pages:'74–81',learn:[
+  'Some verbs change vowel with du and er/sie/es: fahren → du fährst, er fährt · nehmen → nimmst, nimmt · sehen → siehst, sieht · lesen → liest · essen → isst.',
+  'Akkusativ: den / einen / keinen (masculine only).',
+  'möchten: ich möchte, du möchtest, er möchte (no -t!), wir möchten.'],
+ qs:[
+  F('Er ___ nach München. (fahren)',['fährt'],'a → ä with du/er: er fährt.'),
+  F('Du ___ den Bus. (nehmen)',['nimmst'],'nehmen → du nimmst (also the consonants change).'),
+  F('Sie (she) ___ den Dom. (sehen)',['sieht'],'e → ie: sie sieht.'),
+  M('Ich suche ___ Bahnhof.',['den','der','dem','das'],'der Bahnhof → den (object).'),
+  M('Wir besuchen ___ Museum.',['das','den','dem','der'],'Neuter: das stays das.'),
+  M('Er ___ einen Kaffee.',['möchte','möchtet','möchtest','möchten'],'er möchte — like ich.'),
+  W('Put the words in order:',['Ich|brauche|einen|Stadtplan'],'Subject, verb, object.'),
+  F('Ich habe ___ Hund. (kein, der Hund)',['keinen'],'Masculine Akkusativ → keinen.')]},
+ {title:'Rückblick Kapitel 3',pages:'82–84',review:true,learn:['Mixed review of Kapitel 3 (plus Teil B: München).'],
+ qs:[
+  M('Capital of Bavaria (Bayern):',['München','Nürnberg','Berlin','Stuttgart'],'München is the capital of Bayern.'),
+  M('The Oktoberfest takes place in …',['München','Köln','Hamburg','Wien'],'Every year in München.'),
+  F('Er ___ die Zeitung. (lesen)',['liest'],'lesen → er liest.'),
+  M('“Bis wann ist das Museum geöffnet?” asks about …',['closing time','price','address','opening day'],'bis wann = until when.'),
+  M('Ich nehme ___ Tee.',['einen','ein','eine'],'der Tee → einen.'),
+  M('8:30 =',['halb neun','halb acht','acht halb','Viertel vor acht'],'halb + next hour.'),
+  W('Put the words in order:',['Frühstück|gibt|es|um|sieben|Uhr','Um|sieben|Uhr|gibt|es|Frühstück'],'Verb in position 2. Both orders are correct.'),
+  M('“ü” as in “München”: how to say it?',['say “ee” with rounded lips','say “u”','say “i”','say “oo”'],'Tongue in “ee” position, lips like “oo”.')]}
+]},
+{n:4,title:'Essen und Trinken',pages:'86–108',sections:[
+ {title:'Frühstück, Geschirr und Besteck',pages:'86–89',learn:[
+  'das Brötchen, die Butter, die Marmelade, der Käse, die Wurst, das Ei, der Kaffee, der Tee, der Saft.',
+  'Geschirr: der Teller, die Tasse, das Glas. Besteck: das Messer, die Gabel, der Löffel.',
+  'All nouns ending in <b>-chen</b> are <b>das</b>.'],
+ qs:[
+  M('You cut with …',['das Messer','die Gabel','der Löffel','der Teller'],'Messer = knife.'),
+  M('You eat soup with …',['der Löffel','das Messer','die Gabel','die Tasse'],'Löffel = spoon.'),
+  M('Coffee comes in …',['eine Tasse','ein Teller','eine Gabel','ein Löffel'],'die Tasse = cup.'),
+  M('___ Butter',['die','der','das'],'die Butter.'),
+  M('___ Brötchen',['das','der','die'],'-chen → always das.'),
+  F('Du ___ Brot. (essen)',['isst'],'essen → du isst, er isst.'),
+  M('Zum Frühstück trinke ich ___ Orangensaft.',['einen','ein','eine'],'der Saft → einen (Akkusativ).'),
+  M('___ Käse',['der','die','das'],'der Käse.')]},
+ {title:'Einkaufen: Mengen und Plural',pages:'90–94',learn:[
+  'Amounts with no “of”: ein Liter Milch, eine Flasche Wasser, ein Kilo Äpfel, 200 Gramm Käse, eine Dose Tomaten, eine Packung Kaffee.',
+  'Plural patterns: -e (Tische), ¨e (Stühle), -er/¨er (Eier, Gläser), -n/-en (Tomaten), -s (Autos), no change (Brötchen).',
+  'In a shop: Ich hätte gern … · Sonst noch etwas? · Das ist alles.'],
+ qs:[
+  M('ein ___ Milch',['Liter','Kilo','Stück','Dose'],'Liquids → Liter.'),
+  M('eine ___ Wein',['Flasche','Packung','Kilo','Gramm'],'Flasche = bottle.'),
+  M('Plural of “der Apfel”:',['die Äpfel','die Apfels','die Apfeln','die Äpfeln'],'Umlaut, no ending.'),
+  M('Plural of “die Tomate”:',['die Tomaten','die Tomates','die Tomate','die Tomäten'],'Feminine nouns with -e → add -n.'),
+  F('Plural of “das Ei”: die ___',['Eier'],'-er plural.'),
+  M('“Ich hätte gern …” means …',['I would like …','I had …','I have to …','I like …'],'Polite way to order or buy.'),
+  M('Plural of “das Brötchen”:',['die Brötchen','die Brötchens','die Brötchenen'],'-chen nouns don’t change.'),
+  M('“Sonst noch etwas?” means …',['Anything else?','That’s all.','How much?','Not at all.'],'Answer: Nein, danke, das ist alles.')]},
+ {title:'Im Restaurant + Grammatik',pages:'95–105',learn:[
+  '<b>mögen</b>: ich mag, du magst, er mag, wir mögen, ihr mögt, sie mögen.',
+  'Past of sein/haben: ich <b>war</b>, du warst, er war, wir waren, ihr wart · ich <b>hatte</b>, du hattest, wir hatten.',
+  'Akkusativ pronouns: mich, dich, ihn, sie, es, uns, euch, sie/Sie.',
+  'Restaurant: Die Speisekarte, bitte. · Ich nehme … · Zahlen, bitte! · Zusammen oder getrennt?'],
+ qs:[
+  F('Ich ___ keinen Fisch. (mögen)',['mag'],'ich mag.'),
+  M('Du ___ Schokolade.',['magst','mögst','mag','mögen'],'du magst.'),
+  M('Gestern ___ ich in Berlin.',['war','bin','hatte','waren'],'Past of sein: ich war.'),
+  F('Wir ___ keine Zeit. (haben, past)',['hatten'],'wir hatten.'),
+  M('Der Salat? Ich nehme ___.',['ihn','er','es','sie'],'der Salat → ihn (Akkusativ).'),
+  M('Die Suppe ist gut. Ich esse ___ gern.',['sie','ihn','es','ihr'],'die Suppe → sie.'),
+  M('You want to pay. You say:',['Zahlen, bitte!','Guten Appetit!','Prost!','Die Speisekarte, bitte.'],'Zahlen = to pay.'),
+  M('Kennst du ___? (me)',['mich','mir','ich','mein'],'Akkusativ of ich = mich.')]},
+ {title:'Rückblick Kapitel 4',pages:'106–108',review:true,learn:['Mixed review of Kapitel 4.'],
+ qs:[
+  M('Plural of “das Glas”:',['die Gläser','die Glase','die Glasen','die Glass'],'¨er plural.'),
+  M('Er ___ gern Kartoffeln.',['isst','esst','ist','esse'],'isst (eats) — not ist (is)!'),
+  F('Ihr ___ im Kino. (sein, past)',['wart'],'ihr wart.'),
+  M('Das Bier? Ich trinke ___ nicht.',['es','ihn','sie','er'],'das Bier → es.'),
+  M('eine ___ Cola',['Dose','Kilo','Gramm','Stück'],'Dose = can.'),
+  M('“Guten Appetit!” is said …',['before eating','after paying','when toasting','when leaving'],'Toasting = Prost!'),
+  M('“eu” in “heute” sounds like …',['“oy” in “boy”','“you”','“ee-oo”','“ay”'],'eu and äu = [oy]: heute, Häuser.'),
+  W('Put the words in order:',['Ich|mag|keinen|Kaffee'],'der Kaffee → keinen.')]}
+]},
+{n:5,title:'Alltag',pages:'110–140',sections:[
+ {title:'Tagesablauf: trennbare Verben',pages:'110–113',learn:[
+  'Separable verbs: the prefix goes to the <b>end</b>: aufstehen → Ich stehe um 7 Uhr <b>auf</b>.',
+  'Common: aufstehen, einkaufen, anrufen, fernsehen, anfangen, aufräumen.',
+  'Not separable: be-, ver-, er-, ge-, ent-, emp-, zer- (verstehen, besuchen). frühstücken is not separable either.'],
+ qs:[
+  W('Put the words in order:',['Ich|stehe|um|sechs|Uhr|auf','Um|sechs|Uhr|stehe|ich|auf'],'Prefix “auf” at the end.'),
+  M('anrufen: Er ___ seine Mutter ___.',['ruft … an','anruft … –','ruft … –','an … ruft'],'Verb in position 2, prefix at the end.'),
+  F('Wir ___ am Abend fern. (fernsehen)',['sehen'],'fern goes to the end; wir sehen.'),
+  M('Which verb is NOT separable?',['verstehen','aufstehen','einkaufen','anfangen'],'ver- is never separated.'),
+  F('Du ___ im Supermarkt ein. (einkaufen)',['kaufst'],'du kaufst … ein.'),
+  M('Der Film ___ um 20 Uhr ___.',['fängt … an','anfängt … –','fangt … an','fängt … ab'],'anfangen: er fängt … an (a → ä).'),
+  M('“der Feierabend” means …',['end of the working day','holiday','party','weekend'],'Nach der Arbeit = Feierabend.'),
+  M('Ich ___ um 8 Uhr. (frühstücken)',['frühstücke','stücke … früh','frühstücke … früh'],'frühstücken is not separable.')]},
+ {title:'Arbeit, Computer, müssen/sollen',pages:'114–127',learn:[
+  '<b>müssen</b> (must): ich muss, du musst, er muss, wir müssen, ihr müsst.',
+  '<b>sollen</b> (should / someone says I must): ich soll, du sollst, er soll.',
+  'Computer: speichern (save), löschen (delete), drucken (print), öffnen (open), schicken (send).'],
+ qs:[
+  F('Ich ___ heute lange arbeiten. (müssen)',['muss'],'ich muss.'),
+  M('Du ___ den Brief schreiben.',['musst','muss','müsst','müssen'],'du musst.'),
+  M('Der Chef sagt, ich ___ den Bericht schreiben.',['soll','sollt','sollst','sollen'],'sollen = an order from another person.'),
+  M('To save a file:',['die Datei speichern','die Datei löschen','die Datei drucken','die Datei öffnen'],'speichern = save.'),
+  M('“löschen” =',['delete','print','open','send'],'löschen = delete.'),
+  W('Put the words in order:',['Wir|müssen|heute|arbeiten','Heute|müssen|wir|arbeiten'],'Modal in position 2, infinitive at the end.'),
+  M('Ihr ___ pünktlich sein.',['müsst','müssen','muss','musst'],'ihr müsst.'),
+  M('“Ich drucke das Dokument.” =',['I print the document.','I delete the document.','I write the document.','I read the document.'],'drucken = print, der Drucker = printer.')]},
+ {title:'Das Perfekt',pages:'130–135',learn:[
+  'Perfekt = <b>haben/sein</b> (position 2) + <b>Partizip II</b> (end): Ich habe Pizza gegessen.',
+  'Regular: ge-…-t (gemacht, gearbeitet). Irregular: ge-…-en (gegessen, geschrieben).',
+  '<b>sein</b> for movement/change: ist gegangen, ist gefahren, ist gekommen, ist aufgestanden.',
+  'Separable: ein<b>ge</b>kauft. No ge- for -ieren (telefoniert) and be-/ver- verbs (besucht, verstanden).'],
+ qs:[
+  M('Ich ___ Pizza gegessen.',['habe','bin','hat','war'],'essen → haben.'),
+  M('Er ___ nach Hamburg gefahren.',['ist','hat','habe','bin'],'Movement → sein.'),
+  F('machen → Partizip II:',['gemacht'],'Regular: ge + mach + t.'),
+  M('Partizip of “einkaufen”:',['eingekauft','geeinkauft','einkaufte','eingekaufen'],'ge- goes between prefix and stem.'),
+  M('Partizip of “telefonieren”:',['telefoniert','getelefoniert','telefonierte','getelefonieren'],'-ieren verbs: no ge-.'),
+  M('Partizip of “besuchen”:',['besucht','gebesucht','besuchen','gebesuchen'],'be- verbs: no ge-.'),
+  F('schreiben → Partizip II:',['geschrieben'],'Irregular: ge…en with vowel change.'),
+  M('Wann ___ du aufgestanden?',['bist','hast','bin','ist'],'aufstehen = change of state → sein: du bist.')]},
+ {title:'Termine, Datum, temporale Präpositionen',pages:'121–127, 136–140',learn:[
+  '<b>am</b> + day/date (am Montag, am 3. Mai) · <b>um</b> + clock time · <b>im</b> + month/season (im Juli) · von … bis.',
+  'Dates: der erste, zweite, <b>dritte</b>, vierte … siebte, zwanzigste.',
+  'Letters: Sehr geehrte Frau … / Sehr geehrter Herr … → Mit freundlichen Grüßen. Liebe Anna / Lieber Tom → Viele Grüße.'],
+ qs:[
+  M('___ Juli habe ich Urlaub.',['Im','Am','Um','In'],'Months → im.'),
+  M('___ Mittwoch habe ich einen Termin.',['Am','Im','Um','An'],'Days → am.'),
+  M('Formal letter opening:',['Sehr geehrte Frau Weber,','Hallo Frau Weber!','Liebe Weber,','Hi Frau,'],'Formal: Sehr geehrte (woman) / Sehr geehrter (man).'),
+  M('Formal letter ending:',['Mit freundlichen Grüßen','Tschüss','Bis bald','Küsse'],'Standard formal closing.'),
+  M('“3. März” is read:',['der dritte März','der dreite März','der drei März','der dritten März'],'3rd = dritte (irregular).'),
+  M('“Ich muss den Termin absagen.” means …',['cancel the appointment','make the appointment','move the appointment','confirm the appointment'],'absagen = cancel, vereinbaren = arrange.'),
+  F('1. = der ___',['erste'],'1st = erste (irregular).'),
+  M('Ich arbeite ___ 9 ___ 17 Uhr.',['von … bis','um … bis','am … bis','ab … von'],'von … bis = from … to.')]}
+]},
+{n:6,title:'Reisen',pages:'142–168',sections:[
+ {title:'Wetter, Jahreszeiten, Monate',pages:'142–144',learn:[
+  'Es regnet · Es schneit · Die Sonne scheint · Es ist windig / bewölkt / kalt / warm.',
+  'der Frühling, der Sommer, der Herbst, der Winter → <b>im</b> Sommer.',
+  'Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember → <b>im</b> Mai.'],
+ qs:[
+  M('“Es schneit.”',['It’s snowing.','It’s raining.','It’s sunny.','It’s windy.'],'der Schnee = snow.'),
+  M('Season after Sommer:',['der Herbst','der Frühling','der Winter'],'Frühling → Sommer → Herbst → Winter.'),
+  F('Month after März:',['April'],'März → April → Mai.'),
+  M('___ Winter ist es kalt.',['Im','Am','Um'],'Seasons → im.'),
+  M('“bewölkt” =',['cloudy','windy','foggy','hot'],'die Wolke = cloud.'),
+  F('Die Sonne ___. (scheinen)',['scheint'],'sie → -t.'),
+  M('“Es sind 30 Grad.” It is …',['hot','cold','freezing','cool'],'30 °C is hot.'),
+  M('Last month of the year:',['Dezember','November','Januar','Oktober'],'Dezember.')]},
+ {title:'Reiseziele: Konjunktionen und wollen',pages:'145–150, 159',learn:[
+  '<b>und, aber, oder, denn, sondern</b> connect sentences and do <b>not</b> change word order.',
+  'denn = because · sondern = but rather (after nicht/kein).',
+  '<b>wollen</b>: ich will, du willst, er will, wir wollen, ihr wollt.'],
+ qs:[
+  M('Ich fahre nach Spanien, ___ dort ist es warm.',['denn','aber','oder','sondern'],'Reason → denn.'),
+  M('Ich fahre nicht ans Meer, ___ in die Berge.',['sondern','aber','denn','und'],'After nicht → sondern.'),
+  M('Er ___ nach Italien fahren.',['will','willst','wollt','wollen'],'er will (not “wills”).'),
+  F('Du ___ Urlaub machen. (wollen)',['willst'],'du willst.'),
+  W('Put the words in order:',['Ich|bleibe|zu Hause|denn|ich|bin|krank'],'After denn: normal word order — subject, verb.'),
+  M('Das Hotel ist schön, ___ teuer.',['aber','denn','oder','sondern'],'Contrast → aber.'),
+  M('Fährst du mit dem Zug ___ mit dem Auto?',['oder','aber','denn','sondern'],'Choice → oder.'),
+  M('Wir ___ ans Meer fahren.',['wollen','will','wollt','willst'],'wir wollen.')]},
+ {title:'Kleidung, Verkehrsmittel, Imperativ',pages:'151–156',learn:[
+  'Imperativ — Sie: Kommen Sie! · du: Komm! (no -st; e→i stays: Nimm!, Lies!; no umlaut: Fahr!) · ihr: Kommt!',
+  'mit + Dativ: mit <b>dem</b> Zug / Bus / Auto, mit <b>der</b> U-Bahn. On foot: zu Fuß.',
+  'Colors: rot, blau, grün, gelb, schwarz, weiß, grau, braun.'],
+ qs:[
+  M('du-Imperativ of “kommen”:',['Komm!','Kommst!','Kommen!','Kommt du!'],'Drop -st and du.'),
+  M('du-Imperativ of “nehmen”:',['Nimm!','Nehm!','Nimmst!','Nehmen!'],'e → i stays: Nimm!'),
+  M('Sie-Imperativ of “warten”:',['Warten Sie!','Wartet Sie!','Sie warten!','Warte Sie!'],'Verb first, then Sie.'),
+  F('ihr-Imperativ of “kommen”: ___!',['Kommt'],'ihr form without ihr.'),
+  M('Ich fahre mit ___ U-Bahn.',['der','dem','die','den'],'die U-Bahn → mit der (Dativ).'),
+  M('Ich fahre mit ___ Bus.',['dem','der','den','die'],'der Bus → mit dem.'),
+  M('“zu Fuß gehen” =',['walk','cycle','drive','fly'],'der Fuß = foot.'),
+  M('“Hin und zurück?” at the ticket office =',['return ticket?','one way?','first class?','which platform?'],'einfach = one way.')]},
+ {title:'Dativ, Richtungen + Rückblick',pages:'160–168',review:true,learn:[
+  'Dativ: <b>dem</b> (der/das), <b>der</b> (die), <b>den …n</b> (plural).',
+  'Dativ pronouns: mir, dir, ihm, ihr, ihm, uns, euch, ihnen/Ihnen.',
+  'Verbs with Dativ: helfen, gefallen, gehören, danken, schmecken.',
+  'Where to: nach Berlin · in die Schweiz · ans Meer · in die Berge · zum Arzt / zur Bank.'],
+ qs:[
+  M('Das Kleid gefällt ___. (me)',['mir','mich','ich','mein'],'gefallen + Dativ → mir.'),
+  M('Kannst du ___ helfen? (him)',['ihm','ihn','er','sein'],'helfen + Dativ → ihm.'),
+  M('Wir fahren ___ Meer.',['ans','nach','zum','im'],'to the sea → ans Meer (an das).'),
+  M('Ich fahre ___ Schweiz.',['in die','nach','nach der','zur'],'Country with article → in die.'),
+  M('Er geht ___ Arzt.',['zum','zur','nach','in'],'zu + dem = zum.'),
+  F('Das Buch gehört ___. (her)',['ihr'],'Dativ of sie (she) → ihr.'),
+  M('Ich danke ___. (you, formal)',['Ihnen','Sie','Ihr','euch'],'danken + Dativ → Ihnen.'),
+  M('“ch” after a/o/u (Buch, acht) sounds …',['throaty, from the back (ach-Laut)','like “sh”','like “k”','silent'],'After e/i/ä/ö/ü (ich) it’s the soft ich-Laut.')]}
+]},
+{n:7,title:'Wohnen',pages:'170–196',sections:[
+ {title:'Wohnung und Anzeigen',pages:'170–177',learn:[
+  'das Wohnzimmer, das Schlafzimmer, das Kinderzimmer, die Küche, das Bad, der Flur, der Balkon.',
+  'Ad abbreviations: 3-Zi.-Whg. (3-room flat), EG (ground floor), DG (top floor), NK (extra costs), KM (cold rent), WM (warm rent), m².'],
+ qs:[
+  M('“3-Zi.-Whg.” =',['3-room apartment','3rd floor','3 houses','3 kitchens'],'Zimmer-Wohnung.'),
+  M('“NK” in an ad =',['Nebenkosten (extra costs)','Neue Küche','Nähe Kirche','Nichtraucher'],'Heating, water, rubbish …'),
+  M('“Warmmiete” includes …',['rent + heating/extra costs','only rent','furniture','deposit'],'Kaltmiete = rent only.'),
+  M('You cook in …',['die Küche','das Bad','der Flur','der Balkon'],'die Küche = kitchen.'),
+  M('___ Bad',['das','der','die'],'das Bad / das Badezimmer.'),
+  M('“EG” =',['Erdgeschoss (ground floor)','Eigentum','Einzelgarage','extra Garten'],'die Erde = ground.'),
+  M('“Die Wohnung liegt zentral.”',['It is centrally located.','It is quiet.','It is cheap.','It is big.'],'zentral = central.'),
+  F('Room where you sleep (one word):',['Schlafzimmer'],'schlafen + Zimmer.')]},
+ {title:'Möbel und Wechselpräpositionen',pages:'178–182, 187–191',learn:[
+  'in, an, auf, unter, über, vor, hinter, neben, zwischen.',
+  '<b>Wo?</b> (position) → <b>Dativ</b>: stehen, liegen, hängen, sitzen.',
+  '<b>Wohin?</b> (movement) → <b>Akkusativ</b>: stellen, legen, hängen, setzen.',
+  'Short forms: ins = in das · im = in dem · am = an dem · ans = an das · aufs = auf das.'],
+ qs:[
+  M('Die Lampe hängt über ___ Tisch.',['dem','den','der','das'],'Wo? → Dativ: dem.'),
+  M('Ich stelle die Vase auf ___ Tisch.',['den','dem','der','das'],'Wohin? → Akkusativ: den.'),
+  M('Ich lege das Handy ___ Bett.',['aufs','auf dem','im','am'],'Wohin? → auf das = aufs.'),
+  M('Wo ist die Katze? – ___ dem Sofa.',['Unter','Unters','In die','Auf das'],'Wo? → Dativ.'),
+  M('“Ich hänge das Bild an die Wand.” is …',['Wohin + Akkusativ','Wo + Dativ'],'Movement → Akkusativ.'),
+  M('Der Stuhl steht ___ Fenster.',['am','ans','an den','an die'],'Wo? → an dem = am.'),
+  M('Ich setze mich ___ Sofa.',['aufs','auf dem','im','am'],'setzen = movement → Akkusativ.'),
+  M('Das Bild hängt ___ Wand.',['an der','an die','am','ans'],'Wo? → Dativ: die Wand → der.')]},
+ {title:'Den Weg beschreiben, Hausordnung, dürfen',pages:'183–184, 192',learn:[
+  'geradeaus, links, rechts, die erste Straße links, an der Ampel, über die Kreuzung.',
+  '<b>dürfen</b> (allowed): ich darf, du darfst, er darf, wir dürfen, ihr dürft.',
+  'Hausordnung: Ruhezeit (quiet time), Hier darf man nicht rauchen.'],
+ qs:[
+  M('“geradeaus” =',['straight ahead','left','right','back'],'gerade = straight.'),
+  F('Hier ___ man nicht parken. (dürfen)',['darf'],'man → like er: darf.'),
+  M('Du ___ hier nicht rauchen.',['darfst','darf','dürft','dürfen'],'du darfst.'),
+  M('“an der Ampel” =',['at the traffic light','at the corner','at the bridge','at the station'],'die Ampel = traffic light.'),
+  M('“Nach 22 Uhr ist Ruhezeit.”',['Quiet time after 10 pm','Party after 10 pm','Close the door at 10','Shops open after 10'],'Ruhe = quiet.'),
+  M('Gehen Sie ___ Kreuzung.',['über die','über der','auf die','in die'],'Movement across → über + Akkusativ.'),
+  W('Put the words in order:',['Man|darf|nicht|laut|sein'],'Modal in position 2, infinitive at the end.'),
+  M('“Darf ich hier sitzen?” asks for …',['permission','ability','obligation','a wish'],'dürfen = permission.')]},
+ {title:'Komparation + Rückblick',pages:'192–196',review:true,learn:[
+  'klein – kleiner – am kleinsten · groß – größer – am größten · alt – älter – am ältesten.',
+  'Irregular: gut – besser – am besten · viel – mehr – am meisten · gern – lieber – am liebsten.',
+  'größer <b>als</b> (bigger than) · so groß <b>wie</b> (as big as).'],
+ qs:[
+  M('Comparative of “gut”:',['besser','guter','güter','mehr gut'],'Irregular.'),
+  F('Comparative of “groß”:',['größer'],'Short adjectives often get an umlaut.'),
+  M('Mein Zimmer ist kleiner ___ dein Zimmer.',['als','wie','wann','dann'],'Comparative + als.'),
+  M('Die Wohnung ist so teuer ___ das Haus.',['wie','als','so','dann'],'so … wie = as … as.'),
+  M('Superlative of “viel”:',['am meisten','am vielsten','am mehrsten','meist'],'viel – mehr – am meisten.'),
+  M('Ich trinke ___ Tee als Kaffee. (prefer)',['lieber','gerner','mehr gern','besser'],'gern – lieber – am liebsten.'),
+  F('Comparative of “alt”:',['älter'],'alt → älter.'),
+  M('The “h” in “haben” is …',['pronounced (a breath)','silent','like “ch”','like “k”'],'At the start it’s spoken; after a vowel (gehen) it’s silent and makes the vowel long.')]}
+]},
+{n:8,title:'Begegnungen und Ereignisse',pages:'198–220',sections:[
+ {title:'Wünsche und Einladungen',pages:'198–200',learn:[
+  'Herzlichen Glückwunsch zum Geburtstag! · Alles Gute! · Gute Besserung! (get well) · Viel Erfolg! · Frohe Weihnachten!',
+  'Accept: Ich komme gern. Decline: Leider kann ich nicht kommen, denn …',
+  '<b>werden</b>: ich werde, du wirst, er wird, wir werden, ihr werdet, sie werden.'],
+ qs:[
+  M('To someone who is sick:',['Gute Besserung!','Viel Spaß!','Prost!','Frohe Ostern!'],'Besserung = getting better.'),
+  M('For a birthday:',['Herzlichen Glückwunsch zum Geburtstag!','Gute Reise!','Gute Besserung!','Guten Appetit!'],'Also: Alles Gute zum Geburtstag!'),
+  M('Before an exam:',['Viel Erfolg!','Gute Besserung!','Mahlzeit!','Gesundheit!'],'Erfolg = success.'),
+  F('Er ___ morgen 40. (werden)',['wird'],'er wird.'),
+  M('Du ___ Lehrer.',['wirst','wird','werdest','werdet'],'du wirst.'),
+  M('Decline an invitation politely:',['Leider kann ich nicht kommen.','Ich komme gern.','Vielen Dank, ich komme!','Klar, bis dann!'],'leider = unfortunately.'),
+  M('“Gesundheit!” is said when someone …',['sneezes','leaves','eats','pays'],'Like “bless you”.'),
+  F('Ihr ___ bestimmt Ärzte. (werden)',['werdet'],'ihr werdet.')]},
+ {title:'Die Gesundheit',pages:'201–204',learn:[
+  'der Kopf, der Hals, der Arm, die Hand, der Bauch, der Rücken, das Bein, der Fuß, das Auge, das Ohr, der Zahn.',
+  'Ich habe Kopfschmerzen. · Mir <b>tut</b> der Bauch weh. · Mir <b>tun</b> die Füße weh (plural).',
+  'Arzt: Ich möchte einen Termin. Advice: Bleiben Sie im Bett! Trinken Sie viel Tee!'],
+ qs:[
+  M('Plural of “der Fuß”:',['die Füße','die Fuße','die Füßen','die Fußes'],'Umlaut + e.'),
+  M('Mir ___ der Kopf weh.',['tut','tun','tue','tust'],'One thing → tut.'),
+  M('Mir ___ die Augen weh.',['tun','tut','tue','tutet'],'Plural → tun.'),
+  M('“Halsschmerzen” =',['sore throat','headache','backache','toothache'],'der Hals = throat/neck.'),
+  M('Toothache — you go to …',['der Zahnarzt','der Augenarzt','der Frisör','der Bäcker'],'der Zahn = tooth.'),
+  F('Ich habe Fieber. Ich ___ zum Arzt gehen. (müssen)',['muss'],'ich muss.'),
+  M('“Bleiben Sie im Bett!” is …',['Imperativ','Perfekt','Präteritum','Komparativ'],'An instruction → Imperativ (Sie form).'),
+  M('___ Bein',['das','der','die'],'das Bein.')]},
+ {title:'Entschuldigungen, Modalverben (Vergangenheit), Präpositionen',pages:'205–206, 213–217',learn:[
+  'Es tut mir leid. / Entschuldigung, ich bin zu spät. → Das macht nichts. / Kein Problem.',
+  'Modal past: konnte, musste, wollte, durfte, sollte (no umlaut + -te). Ich konnte nicht kommen.',
+  '<b>mit, zu, von</b> + Dativ · <b>für</b> + Akkusativ.'],
+ qs:[
+  M('Ich ___ gestern nicht kommen. (können)',['konnte','könnte','kannte','konnten'],'Past of können = konnte (no umlaut).'),
+  F('Er ___ lange arbeiten. (müssen, past)',['musste'],'musste.'),
+  M('Wir ___ ins Kino gehen. (wollen, past)',['wollten','wollen','willten','wolltet'],'wir wollten.'),
+  M('Das Geschenk ist für ___. (you, du)',['dich','dir','du','dein'],'für + Akkusativ → dich.'),
+  M('Ich fahre mit ___ Freundin.',['meiner','meine','meinen','meinem'],'mit + Dativ, feminine → meiner.'),
+  M('Ich komme gerade von ___ Arbeit.',['der','die','dem','den'],'von + Dativ, die Arbeit → der.'),
+  M('An apology:',['Es tut mir leid.','Das macht nichts.','Kein Problem.','Gern geschehen.'],'Es tut mir leid = I’m sorry.'),
+  M('Answer to an apology:',['Das macht nichts.','Es tut mir leid.','Entschuldigung.','Gute Besserung.'],'= It doesn’t matter.')]},
+ {title:'Großer Rückblick (Kapitel 1–8)',pages:'218–220',review:true,learn:[
+  'Final review. Spoken past: Perfekt for most verbs; Präteritum for sein (war), haben (hatte) and modal verbs.',
+  'After this, try the book’s practice exam “Start Deutsch 1” on page 222.'],
+ qs:[
+  M('Letztes Jahr ___ ich in Paris.',['war','bin','habe','hatte'],'Past of sein → war.'),
+  M('Wir ___ viel Spaß. (haben, past)',['hatten','hattet','haben','hatte'],'wir hatten.'),
+  F('Sie (she) ___ nach Hause gegangen.',['ist'],'gehen = movement → sein.'),
+  M('Ich schenke ___ Mutter Blumen.',['meiner','meine','meinen','meinem'],'Who gets it? → Dativ: meiner Mutter.'),
+  M('Ich gebe ___ das Buch. (him)',['ihm','ihn','er','sein'],'Receiver → Dativ: ihm.'),
+  M('Christmas in Germany is celebrated mainly on …',['24–26 December','31 December','1 January','6 January'],'Heiligabend (24th) is the main evening.'),
+  M('der Geburtstag + das Geschenk =',['das Geburtstagsgeschenk','der Geburtstagsgeschenk','die Geburtstagsgeschenk'],'Last word decides. The “s” links the words.'),
+  W('Put the words in order:',['Ich|habe|eine Party|gemacht'],'Perfekt: haben in position 2, Partizip at the end.')]}
+]}
+];
+
+</script>
+<script>
+const KEY='begegnungen-a1-path-v1';
+let S={done:{}};
+try{const r=localStorage.getItem(KEY); if(r) S=JSON.parse(r);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+// flat list of sections in order
+const FLAT=[];BOOK.forEach((c,ci)=>c.sections.forEach((s,si)=>{s.id=`k${c.n}s${si+1}`;s.chap=c;s.idx=FLAT.length;FLAT.push(s);}));
+const isDone=s=>!!S.done[s.id];
+const unlocked=s=>s.idx===0||isDone(FLAT[s.idx-1])||isDone(s);
+const nextIdx=()=>{const i=FLAT.findIndex(s=>!isDone(s));return i<0?null:i};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=t=>String(t).toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[.,!?;:"“”]/g,'').replace(/\s+/g,' ').trim();
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const app=document.getElementById('app');
+
+/* ---------- HOME ---------- */
+let openChap=null;
+function home(){
+  const total=FLAT.length, done=FLAT.filter(isDone).length, ni=nextIdx();
+  if(openChap===null) openChap= ni===null?null:FLAT[ni].chap.n;
+  let h=`<h1>Deutsch A1 – Study Path</h1><div class="sub">Follows the 8 chapters of the book Begegnungen A1⁺ · ${total} sections</div>
+  <div class="bar"><i style="width:${Math.round(done/total*100)}%"></i></div>
+  <div class="sub">${done} of ${total} sections finished</div>
+  <div class="continue">${ni===null?`<div class="score"><div class="big">🎉</div><p>You finished every section! Now try the practice exam “Start Deutsch 1” in your book (page 222).</p></div>`
+    :`<button class="btn wide" onclick="openSec(${ni})">${done?'Continue':'Start'}: ${esc(FLAT[ni].title)} →</button>`}</div>`;
+  BOOK.forEach(c=>{
+    const cd=c.sections.every(isDone), open=openChap===c.n;
+    const nd=c.sections.filter(isDone).length;
+    h+=`<div class="chap ${cd?'done':''}"><div class="chap-h" onclick="toggle(${c.n})"><div class="num">${c.n}</div>
+      <div class="t"><h3>${esc(c.title)}</h3><small>Book pages ${c.pages} · ${nd}/${c.sections.length} done</small></div><span>${open?'▾':'▸'}</span></div>`;
+    if(open){h+='<div class="secs">';c.sections.forEach(s=>{
+      const r=S.done[s.id], un=unlocked(s), cur=s.idx===ni;
+      const cls=r?(r.score/r.total>=.75?'ok':'mid'):(cur?'cur':(un?'':'lock'));
+      const icon=r?(r.score/r.total>=.75?'✓':'!'):(un?'':'🔒');
+      h+=`<button class="sec ${cls}" ${un?`onclick="openSec(${s.idx})"`:'disabled'}><span class="dot">${icon}</span>
+        <span class="st">${esc(s.title)}${s.review?'<span class="tag">Test</span>':''}<br><span class="sc">p. ${s.pages}${r?` · best ${r.score}/${r.total}`:''}</span></span></button>`;});
+      h+='</div>';}
+    h+='</div>';
+  });
+  h+=`<div class="foot">Practice questions follow each chapter’s topics. Use them together with the exercises in your book.<br>Progress is saved in this browser. <button class="reset" onclick="resetAll()">Reset progress</button></div>`;
+  app.innerHTML=h; window.scrollTo(0,0);
+}
+function toggle(n){openChap=openChap===n?-1:n;home();}
+function resetAll(){
+  const f=document.querySelector('.foot');
+  f.innerHTML=`Delete all progress? <button class="reset" onclick="S={done:{}};save();openChap=null;home()">Yes, reset</button> · <button class="reset" onclick="home()">Cancel</button>`;
+}
+
+/* ---------- SECTION ---------- */
+let cur=null; // {sec, qs:[{q, ans, order}], checked}
+function openSec(i,onlyWrong){
+  const s=FLAT[i];
+  let list=s.qs.map((q,k)=>({...q,k}));
+  if(onlyWrong&&cur&&cur.sec===s) list=cur.items.filter(it=>!it.correct).map(it=>it.q);
+  cur={sec:s,items:list.map(q=>({q,ans:q.t==='w'?[]:null,opts:q.t==='m'?shuffle(q.o):null,bank:q.t==='w'?shuffle(q.a[0].split('|')):null})),checked:false,retry:!!onlyWrong};
+  renderSec();window.scrollTo(0,0);
+}
+function renderSec(){
+  const s=cur.sec,c=s.chap;
+  let h=`<div class="top"><button class="back" onclick="home()">← Path</button></div>
+  <div class="sub">Kapitel ${c.n} · ${esc(c.title)}</div><h2>${esc(s.title)}${s.review?'<span class="tag">Test</span>':''}</h2>
+  <span class="pill">📖 Book pages ${s.pages}</span>`;
+  if(cur.checked){
+    const sc=cur.items.filter(i=>i.correct).length,t=cur.items.length,p=sc/t;
+    h+=`<div class="score" style="margin-top:16px"><div class="big">${sc}/${t}</div>
+      <p>${p===1?'Perfect! Everything is right.':p>=.75?'Very good! Read the explanations for your mistakes.':p>=.5?'Good start. Check the mistakes below, then retry them.':'Read the “Learn first” notes and book pages again, then retry.'}</p></div>`;
+  } else {
+    h+=`<div class="learn"><h4>Learn first</h4><ul>${s.learn.map(l=>`<li>${l}</li>`).join('')}</ul></div>`;
+    if(cur.retry) h+=`<div class="sub" style="margin-bottom:10px">Retrying only the questions you got wrong.</div>`;
+  }
+  cur.items.forEach((it,n)=>h+=`<div id="q${n}">${qHTML(it,n)}</div>`);
+  if(!cur.checked){
+    h+=`<div id="msg" class="msg"></div><button class="btn wide" onclick="check()">Check my answers</button>`;
+  } else {
+    const ni=s.idx+1<FLAT.length?s.idx+1:null, wrong=cur.items.some(i=>!i.correct);
+    h+=`<div class="row" style="margin-top:6px">${wrong?`<button class="btn ghost" onclick="openSec(${s.idx},true)">Retry my mistakes</button>`:''}
+      ${ni!==null?`<button class="btn" onclick="openSec(${ni})">Next: ${esc(FLAT[ni].title)} →</button>`:`<button class="btn" onclick="home()">Back to path</button>`}</div>
+      <div style="text-align:center;margin-top:12px"><button class="back" onclick="openSec(${s.idx})">Do the whole section again</button></div>`;
+  }
+  app.innerHTML=h; cur.items.forEach((it,n)=>{if(it.q.t==='w')fixH(n)});
+}
+function qHTML(it,n){
+  const q=it.q, ch=cur.checked;
+  let h=`<div class="q ${ch?(it.correct?'right':'wrong'):''}"><div class="qn">QUESTION ${n+1}</div><div class="qt">${esc(q.q)}</div>`;
+  if(q.t==='m'){
+    h+='<div class="opts">'+it.opts.map(o=>{
+      let cls=''; if(!ch){if(it.ans===o)cls='sel';} else {if(o===q.o[0])cls='good';else if(it.ans===o)cls='badpick';}
+      return `<button class="opt ${cls}" ${ch?'disabled':''} onclick="pick(${n},this)" data-v="${esc(o)}">${esc(o)}</button>`;}).join('')+'</div>';
+  } else if(q.t==='f'){
+    h+=`<input class="fill" id="f${n}" value="${esc(it.ans||'')}" ${ch?'disabled':''} autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer" oninput="cur.items[${n}].ans=this.value">`;
+    if(!ch) h+=`<div class="uml">${['ä','ö','ü','ß'].map(u=>`<button onclick="ins(${n},'${u}')">${u}</button>`).join('')}</div>`;
+  } else {
+    h+=`<div class="built">${it.ans.map((w,k)=>`<button class="chip" ${ch?'disabled':''} onclick="unbuild(${n},${k})">${esc(it.bank[w])}</button>`).join('')||'<span class="sub">Tap the words below in the right order</span>'}</div>`;
+    if(!ch) h+=`<div class="bank">${it.bank.map((w,k)=>`<button class="chip ${it.ans.includes(k)?'used':''}" onclick="build(${n},${k})">${esc(w)}</button>`).join('')}</div>`;
+  }
+  if(ch){
+    const yours=q.t==='w'?it.ans.map(k=>it.bank[k]).join(' '):(it.ans||'');
+    const right=q.t==='m'?q.o[0]:q.t==='f'?q.a[0]:q.a[0].split('|').join(' ')+'.';
+    h+=`<div class="fb">${it.correct?`<span class="lab ok">✓ Correct</span>${it.loose?` <span class="sub">(correct spelling: ${esc(right)})</span>`:''}`
+      :`<span class="lab bad">✗ Your answer:</span> ${yours?esc(yours):'<i>(empty)</i>'}<br><span class="lab ok">Correct:</span> ${esc(right)}`}
+      <div class="ex">💡 ${q.e}</div></div>`;
+  }
+  return h+'</div>';
+}
+function pick(n,el){if(cur.checked)return;cur.items[n].ans=el.dataset.v;el.parentNode.querySelectorAll('.opt').forEach(b=>b.classList.toggle('sel',b===el));}
+function ins(n,u){const i=document.getElementById('f'+n);const p=i.selectionStart??i.value.length;i.value=i.value.slice(0,p)+u+i.value.slice(i.selectionEnd??p);cur.items[n].ans=i.value;i.focus();i.setSelectionRange(p+1,p+1);}
+function upd(n){const box=document.getElementById('q'+n);box.innerHTML=qHTML(cur.items[n],n);fixH(n);}
+// reserve space so the word bank never jumps under your finger
+function fixH(n){const box=document.getElementById('q'+n),b=box&&box.querySelector('.built'),k=box&&box.querySelector('.bank');if(!b||!k)return;const it=cur.items[n];if(!it.h)it.h=k.offsetHeight+18;b.style.minHeight=it.h+'px';}
+function build(n,k){const it=cur.items[n];if(cur.checked||it.ans.includes(k))return;it.ans.push(k);upd(n);}
+function unbuild(n,k){if(cur.checked)return;cur.items[n].ans.splice(k,1);upd(n);}
+function check(){
+  if(cur.checked)return;
+  const empty=cur.items.filter(it=>it.q.t==='w'?!it.ans.length:!(it.ans&&String(it.ans).trim())).length;
+  const m=document.getElementById('msg');
+  if(empty&&!cur.warned){cur.warned=true;m.textContent=`${empty} question${empty>1?'s are':' is'} still empty. Tap “Check” again to submit anyway.`;return;}
+  cur.items.forEach(it=>{const q=it.q;
+    if(q.t==='m') it.correct=it.ans===q.o[0];
+    else if(q.t==='f'){const a=(it.ans||'').trim().replace(/[.!?]$/,'');it.correct=q.a.some(x=>norm(x)===norm(a));it.loose=it.correct&&!q.a.some(x=>x.toLowerCase()===a.toLowerCase());}
+    else {const a=norm(it.ans.map(k=>it.bank[k]).join(' '));it.correct=q.a.some(x=>norm(x.split('|').join(' '))===a);}
+  });
+  cur.checked=true;
+  const s=cur.sec;
+  if(!cur.retry){const sc=cur.items.filter(i=>i.correct).length,prev=S.done[s.id];
+    if(!prev||sc>=prev.score) S.done[s.id]={score:sc,total:cur.items.length};}
+  else if(S.done[s.id]){const fixed=cur.items.filter(i=>i.correct).length;S.done[s.id].score=Math.min(S.done[s.id].total,S.done[s.id].score+fixed);}
+  save(); renderSec(); window.scrollTo(0,0);
+}
+home();
+try{if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});}catch(e){}
+</script>
+</body>
+</html>

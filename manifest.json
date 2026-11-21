@@ -1,0 +1,24 @@
+{
+ "name": "Deutsch A1 – Study Path",
+ "short_name": "Deutsch A1",
+ "start_url": "./index.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#f6f3ec",
+ "theme_color": "#137a7f",
+ "description": "Step-by-step German A1 practice following the chapters of Begegnungen A1+.",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
